@@ -2,6 +2,7 @@ package com.lysoft.googleglass
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.AsyncTask
 import android.os.Bundle
@@ -16,6 +17,7 @@ import java.io.File
 import java.io.IOException
 import java.lang.ref.WeakReference
 import java.util.*
+
 
 class MainActivity : AppCompatActivity(), GlassGestureDetector.OnGestureListener,
     RecognitionListener {
@@ -98,7 +100,11 @@ class MainActivity : AppCompatActivity(), GlassGestureDetector.OnGestureListener
         when (gesture) {
             GlassGestureDetector.Gesture.TAP -> {
                 tvTouchResult.text = "Gesture detects Tap"
-                Toast.makeText(this, "Tap", Toast.LENGTH_SHORT).show()
+                val intent = Intent()
+                intent.action = Intent.ACTION_VIEW
+                intent.type = "image/*"
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent);
                 return true
             }
             GlassGestureDetector.Gesture.SWIPE_FORWARD -> {
@@ -117,11 +123,11 @@ class MainActivity : AppCompatActivity(), GlassGestureDetector.OnGestureListener
                 return true
             }
 
-            GlassGestureDetector.Gesture.SWIPE_DOWN -> {
-                tvTouchResult.text = "Gesture detects Swipe Down"
-                Toast.makeText(this, "Swipe Down", Toast.LENGTH_SHORT).show()
-                return true
-            }
+//            GlassGestureDetector.Gesture.SWIPE_DOWN -> {
+//                tvTouchResult.text = "Gesture detects Swipe Down"
+//                Toast.makeText(this, "Swipe Down", Toast.LENGTH_SHORT).show()
+//                return true
+//            }
             else -> return false
         }
     }
